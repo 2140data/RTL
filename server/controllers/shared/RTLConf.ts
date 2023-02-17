@@ -165,6 +165,7 @@ export const updateUISettings = (req, res, next) => {
     res.status(201).json({ message: 'Node Settings Updated Successfully' });
   } catch (errRes) {
     const errMsg = 'Update Node Settings Error';
+    logger.log({ selectedNode: req.session.selectedNode, level: 'ERROR', fileName: 'RTLConf', msg: errMsg, error: (typeof errRes === 'object' ? JSON.stringify(errRes) : (typeof errRes === 'string') ? errRes : 'Unknown Error') });
     const err = common.handleError({ statusCode: 500, message: errMsg, error: errRes }, 'RTLConf', errMsg, req.session.selectedNode);
     return res.status(err.statusCode).json({ message: err.error, error: err.error });
   }
